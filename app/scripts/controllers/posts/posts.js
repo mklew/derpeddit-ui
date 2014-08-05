@@ -29,6 +29,15 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
                 return _.chain(posts).sortBy('created').reverse().value()
             }).then(displayPostsAs('newest'));
         };
+    }])
+    .controller('LoginSignUpController', ['$scope', function($scope){
+
+        var loginSignUpNav = {
+            displayLogin : true
+        }
+
+        $scope.loginSignUpNav = loginSignUpNav;
+
     }]);
 
 
