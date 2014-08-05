@@ -15,26 +15,25 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="derpedditUiApp">
+  <body ng-app="dpt">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
     <div class="container">
-      <div class="header">
+      <div class="header" ng-controller="PostsController">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
+          <li ng-class="{'active': postsIndex.currentlyDisplays == 'top'}"><a ng-click="displayTopPosts()">top</a></li>
+          <li ng-class="{'active': postsIndex.currentlyDisplays == 'newest'}"><a ng-click="displayNewestPosts()">newest</a></li>
         </ul>
-        <h3 class="text-muted">derpedditUi</h3>
       </div>
 
       <div ng-view=""></div>
 
       <div class="footer">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <h3 class="text-muted">derpedditUi</h3>
       </div>
     </div>
 
@@ -74,6 +73,10 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/constants/constants.js"></script>
+        <script src="scripts/posts/posts.js"></script>
+        <script src="scripts/controllers/posts/posts.js"></script>
+
         <!-- endbuild -->
 </body>
 </html>

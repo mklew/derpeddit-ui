@@ -9,11 +9,12 @@
  * Main module of the application.
  */
 angular
-  .module('derpedditUiApp', [
+  .module('dpt', [
     'ngCookies',
     'ngResource',
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
+    'dpt.posts'
   ])
   .config(function ($routeProvider) {
     $routeProvider

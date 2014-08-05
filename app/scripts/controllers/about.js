@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name derpedditUiApp.controller:AboutCtrl
+ * @name dpt.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the derpedditUiApp
+ * Controller of the dpt
  */
-angular.module('derpedditUiApp')
+angular.module('dpt')
   .controller('AboutCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
