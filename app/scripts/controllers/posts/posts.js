@@ -11,6 +11,9 @@ angular.module('dpt.posts', ['dpt.posts.model'])
 
         $scope.displayTopPosts = function () {
             // TODO fetch via service and order by votes
+
+            $scope.posts = PostService.getAllPosts();
+
             postsIndex.currentlyDisplays = 'top';
         };
 

@@ -21,13 +21,22 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container">
-      <div class="header" ng-controller="PostsController">
+    <div class="container" ng-controller="PostsController">
+      <div class="header">
         <ul class="nav nav-pills pull-right">
           <li ng-class="{'active': postsIndex.currentlyDisplays == 'top'}"><a ng-click="displayTopPosts()">top</a></li>
           <li ng-class="{'active': postsIndex.currentlyDisplays == 'newest'}"><a ng-click="displayNewestPosts()">newest</a></li>
         </ul>
       </div>
+
+        <div> {{ posts }}</div>
+        <div class="container">
+            <div ng-repeat="post in posts" class="row">
+                <button class="btn btn-default">123</button>
+                <div class="btn-group btn-group-xs">+</div>
+                <div class="btn-group btn-group-xs">-</div>
+            </div>
+        </div>
 
       <div ng-view=""></div>
 
