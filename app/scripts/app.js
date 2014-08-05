@@ -15,7 +15,9 @@ angular
         'ngRoute',
         'ngSanitize',
         'dpt.posts',
-        'utils'
+        'dpt.users',
+        'utils',
+        'dpt.directives'
     ])
     .config(function ($routeProvider) {
         $routeProvider
@@ -30,4 +32,7 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+    .controller('AppController', ['$scope', 'CurrentUser', function($scope, CurrentUser){
+        $scope.CurrentUser = CurrentUser;
+    }]);

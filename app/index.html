@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="dpt">
+  <body ng-app="dpt" ng-controller="AppController">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -23,9 +23,10 @@
     <!-- Add your site or application content here -->
     <div class="container" ng-controller="PostsController">
       <div class="header">
-        <ul class="nav nav-pills pull-left">
-          <li ng-class="{'active': postsIndex.currentlyDisplays == 'top'}"><a ng-click="displayTopPosts()">top</a></li>
-          <li ng-class="{'active': postsIndex.currentlyDisplays == 'newest'}"><a ng-click="displayNewestPosts()">newest</a></li>
+        <ul class="nav nav-pills">
+          <li class="pull-left" ng-class="{'active': postsIndex.currentlyDisplays == 'top'}"><a ng-click="displayTopPosts()">top</a></li>
+          <li class="pull-left" ng-class="{'active': postsIndex.currentlyDisplays == 'newest'}"><a ng-click="displayNewestPosts()">newest</a></li>
+          <li class="pull-right"><a ng-show="CurrentUser.isLoggedIn()" ng-click="CurrentUser.logout()">Logout</a></li>
         </ul>
       </div>
 
@@ -76,7 +77,30 @@
                     </div>
 
                     <div class="row" ng-if="!loginSignUpNav.displayLogin">
-                        SIGN UP
+                        <form name="signUpForm" ng-controller="SignUpController">
+                            <div class="form-group" ng-show="signUpForm.submitClicked">
+                                <label for="login" ng-show="signUpForm.login.$error.required">Login is required</label>
+                                <label for="password" ng-show="signUpForm.password.$error.required">Password is required</label>
+                                <label for="password" ng-show="signUpForm.repeated.$error.similar">Passwords do not match</label>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error' : signUpForm.login.$error.required, 'has-success': !signUpForm.login.$error.required}">
+                                <label for="login">Login</label>
+                                <input type="text" class="form-control" id="login" name="login" placeholder="Enter login" required="" ng-model="user.username"/>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error' : (signUpForm.password.$error.required || signUpForm.repeated.$error.similar) && signUpForm.repeated.$dirty && signUpForm.password.$dirty, 'has-success': !(signUpForm.login.$error.required && signUpForm.repeated.$error.similar)}">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="user.password" required=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="repeatPassword">Repeat password</label>
+                                <input type="password" class="form-control" id="repeatPassword" name="repeated"
+                                       dpt-similar="{{user.password}}"
+                                       placeholder="repeat password" ng-model="repeatedPass.pass" required=""/>
+                            </div>
+                            <button type="submit" class="btn btn-submit" ng-click="signUpForm.submitClicked = true; signUpIfValid(user)">Sign up</button>
+                            <pre>{{ user | json }}</pre>
+                            <pre>{{ signUpForm | json }}</pre>
+                        </form>
                     </div>
 
                 </div>
@@ -126,11 +150,15 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/directives/directives.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/constants/constants.js"></script>
         <script src="scripts/posts/posts.js"></script>
         <script src="scripts/controllers/posts/posts.js"></script>
+        <script src="scripts/users/users.js"></script>
+        <script src="scripts/controllers/users/users-ctrls.js"></script>
+        <script src="scripts/users/users-service.js"></script>
         <script src="scripts/utils/utils.js"></script>
 
         <!-- endbuild -->

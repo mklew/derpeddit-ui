@@ -34,10 +34,8 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
 
         var loginSignUpNav = {
             displayLogin : true
-        }
+        };
 
         $scope.loginSignUpNav = loginSignUpNav;
 
     }]);
-
-
