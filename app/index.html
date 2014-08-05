@@ -26,7 +26,10 @@
         <ul class="nav nav-pills">
           <li class="pull-left" ng-class="{'active': postsIndex.currentlyDisplays == 'top'}"><a ng-click="displayTopPosts()">top</a></li>
           <li class="pull-left" ng-class="{'active': postsIndex.currentlyDisplays == 'newest'}"><a ng-click="displayNewestPosts()">newest</a></li>
-          <li class="pull-right"><a ng-show="CurrentUser.isLoggedIn()" ng-click="CurrentUser.logout()">Logout</a></li>
+          <li class="pull-right">
+              <span ng-show="CurrentUser.isLoggedIn()">Hello {{ CurrentUser.getCurrentUser().username }}</span>
+              <a ng-show="CurrentUser.isLoggedIn()" ng-click="CurrentUser.logout()">Logout</a>
+          </li>
         </ul>
       </div>
 
@@ -41,7 +44,11 @@
 
         <div class="container">
             <div class="row">
-                  <div class="col-md-8">
+                  <div ng-class="{'col-md-12' : CurrentUser.isLoggedIn(), 'col-md-8': !CurrentUser.isLoggedIn()}">
+                      <div class="row">
+                          <button class="btn btn-default" ng-show="CurrentUser.isLoggedIn()">Submit new post</button>
+                      </div>
+                      <div class="row"></div>
                       Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
                       sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
                       aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
@@ -65,7 +72,7 @@
                       vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto
                       odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te
                   </div>
-                <div class="col-md-4" ng-controller="LoginSignUpController">
+                <div class="col-md-4" ng-controller="LoginSignUpController" ng-hide="CurrentUser.isLoggedIn()">
                     <div class="row">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default" ng-click="loginSignUpNav.displayLogin = true">Login</button>
@@ -73,7 +80,22 @@
                         </div>
                     </div>
                     <div class="row" ng-if="loginSignUpNav.displayLogin">
-                        LOGIN
+                        <form name="loginForm" ng-controller="LoginController">
+                            <div class="form-group" ng-show="loginForm.submitClicked">
+                                <label for="login" ng-show="loginForm.login.$error.required" class="bg-danger">Login is required</label>
+                                <label for="password" ng-show="loginForm.password.$error.required" class="bg-danger">Password is required</label>
+                                <label ng-show="ctx.validationError" class="bg-danger">{{ctx.validationError}}</label>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error' : loginForm.login.$error.required, 'has-success': !loginForm.login.$error.required}">
+                                <label for="login">Login</label>
+                                <input type="text" class="form-control" id="login" name="login" placeholder="Enter login" required="" ng-model="user.username"/>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error' : loginForm.password.$error.required && loginForm.password.$dirty, 'has-success': !(loginForm.password.$error.required)}">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="user.password" required=""/>
+                            </div>
+                            <button type="submit" class="btn btn-submit" ng-click="loginForm.submitClicked = true; login(user)">Login</button>
+                        </form>
                     </div>
 
                     <div class="row" ng-if="!loginSignUpNav.displayLogin">
@@ -98,8 +120,6 @@
                                        placeholder="repeat password" ng-model="repeatedPass.pass" required=""/>
                             </div>
                             <button type="submit" class="btn btn-submit" ng-click="signUpForm.submitClicked = true; signUpIfValid(user)">Sign up</button>
-                            <pre>{{ user | json }}</pre>
-                            <pre>{{ signUpForm | json }}</pre>
                         </form>
                     </div>
 

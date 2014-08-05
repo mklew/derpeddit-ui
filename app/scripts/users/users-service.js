@@ -29,19 +29,20 @@ angular.module('dpt.users')
                 }
             }
         }])
-    .service('CurrentUser', ['UserService', function (UserService) {
+    .service('CurrentUser', ['UserService', '$q', function (UserService, $q) {
 
         var user = {
             // isLoggedIn
             // profile
         };
 
+
         this.setIsLoggedIn = function () {
             user.isLoggedIn = true;
         };
 
         this.getCurrentUser = function () {
-            return user;
+            return user.profile;
         };
 
         this.isLoggedIn = function () {
@@ -56,16 +57,29 @@ angular.module('dpt.users')
                 user.profile = profile;
             }, function () {
                 user.isLoggedIn = false;
+                return $q.reject();
             })
         };
 
         this.init = function () {
            console.log('intializing');
-           return sync();
+           return this.sync();
         };
 
         this.logout = function () {
-            return UserService.logout();
+            return UserService.logout().then(function(){
+                user.profile = {};
+                user.isLoggedIn = false;
+            }, function(){ return $q.reject(); });
+        };
+
+        this.logIn = function(u) {
+            return UserService.logIn(u).then(function(response){
+                user.isLoggedIn = true;
+                user.profile = user.profile || {};
+                angular.extend(user.profile, response);
+                return response;
+            }, function(i){ return $q.reject(i); })
         }
 
     }])

@@ -34,6 +34,41 @@ angular.module('dpt.users')
                 $log.info('sign up form invalid')
             }
         }
+    }])
+    .controller('LoginController', ['$scope', '$log', 'CurrentUser', function ($scope, $log, CurrentUser) {
+
+        var user = {
+            // from view
+        };
+
+
+        var ctx = {
+
+        };
+
+        $scope.user = user;
+
+        $scope.ctx = ctx;
+
+        $scope.login = function (user) {
+            function loginSuccess(response) {
+                $log.info('login success, response', response);
+                delete ctx.validationError;
+            }
+
+            function loginError(response) {
+                $log.error('login unsuccessful, response', response);
+                ctx.validationError = response.data['non_field_errors']
+            }
+
+            if ($scope.loginForm.$valid) {
+                CurrentUser.logIn(user).then(loginSuccess, loginError)
+            }
+            else {
+                $log.info('login form invalid')
+            }
+        }
+
     }]);
 
 
