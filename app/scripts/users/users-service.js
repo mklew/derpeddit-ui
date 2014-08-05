@@ -48,15 +48,20 @@ angular.module('dpt.users')
             return user.isLoggedIn;
         };
 
-        this.init = function () {
-            console.log('intializing');
+        this.sync = function () {
+            console.log('syncing');
 
-            UserService.profile().then(function (profile) {
+            return UserService.profile().then(function (profile) {
                 user.isLoggedIn = true;
                 user.profile = profile;
             }, function () {
                 user.isLoggedIn = false;
             })
+        };
+
+        this.init = function () {
+           console.log('intializing');
+           return sync();
         };
 
         this.logout = function () {

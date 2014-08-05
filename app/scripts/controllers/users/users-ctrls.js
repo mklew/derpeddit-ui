@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dpt.users')
-    .controller('SignUpController', ['$scope', '$log', 'UserService', function ($scope, $log, UserService) {
+    .controller('SignUpController', ['$scope', '$log', 'UserService', 'CurrentUser', function ($scope, $log, UserService, CurrentUser) {
         var user = {
             // from view
         };
@@ -16,6 +16,10 @@ angular.module('dpt.users')
         $scope.signUpIfValid = function (user) {
             function signUpSuccess(res) {
                 $log.info('SignUp success', res)
+
+                CurrentUser.sync().then(function(){
+
+                });
             }
 
             function signUpFailure(e) {
