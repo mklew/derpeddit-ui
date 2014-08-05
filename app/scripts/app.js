@@ -10,14 +10,15 @@
  */
 angular
   .module('dpt', [
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'dpt.posts'
-  ])
-  .config(function ($routeProvider) {
-    $routeProvider
+        'ngCookies',
+        'ngResource',
+        'ngRoute',
+        'ngSanitize',
+        'dpt.posts',
+        'utils'
+    ])
+    .config(function ($routeProvider) {
+        $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'

@@ -1,28 +1,28 @@
 'use strict';
 
-angular.module('dpt.posts.model', ['dpt.constants', 'ngResource'])
-    .factory('PostsService', ['backendBaseAddress', '$resource', function (baseAddress, $resource) {
+angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
+    .factory('PostsService', ['backendBaseAddress', '$http', '$q', '$log', 'UnwrapDataFromRequest',
+        function (backendBaseAddress, $http, $q, $log, UnwrapDataFromRequest) {
 
-        var Posts = $resource(baseAddress + 'posts/:postId/:action', {postId: '@id', action: ''}, {
-            upvote: {
-                method: 'PUT',
-                params: {
-                    action: 'vote'
+            var baseUrl = backendBaseAddress + 'posts';
+
+            function doVote(post, negative) {
+                var url = baseUrl + '/' + post.id + '/vote';
+                var data = { negative: negative };
+                $log.info('Making PUT request to ', url, 'with data', data);
+                return UnwrapDataFromRequest($http.put(url, data))
+            }
+
+            return {
+                getAllPosts: function () {
+                    $log.info('Making GET request to ', baseUrl);
+                    return UnwrapDataFromRequest($http.get(baseUrl))
+                },
+                upvotePost: function (post) {
+                    return doVote(post, false);
+                },
+                downvotePost: function (post) {
+                    return doVote(post, true);
                 }
             }
-        });
-
-
-        return {
-            getAllPosts: function () {
-                return Posts.query()
-            },
-            upvotePost: function (post) {
-                return Posts.upvote({postId: post.id}, { negative: false });
-            },
-            downvotePost: function (post) {
-                return Posts.upvote({postId: post.id}, { negative: true });
-            }
-        }
     }]);
-
