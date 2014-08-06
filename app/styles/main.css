@@ -77,3 +77,8 @@ body {
     border-bottom: 0;
   }
 }
+
+.dpt-post-summary {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

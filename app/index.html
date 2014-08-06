@@ -23,107 +23,94 @@
     <!-- Add your site or application content here -->
     <div class="container" ng-controller="PostsController">
       <div class="header">
-        <ul class="nav nav-pills">
+          <h1>Derpreddit</h1>
+          <ul class="nav nav-pills">
           <li class="pull-left" id="topPosts" ng-class="{'active': displaysTop() }"><a ng-click="displayTopPosts()">top</a></li>
           <li class="pull-left" id="newestPosts" ng-class="{'active': displaysNewest() }"><a ng-click="displayNewestPosts()">newest</a></li>
           <li class="pull-right">
-              <span ng-show="CurrentUser.isLoggedIn()">Hello {{ CurrentUser.getCurrentUser().username }}</span>
-              <a ng-show="CurrentUser.isLoggedIn()" ng-click="CurrentUser.logout()">Logout</a>
+              <p><span ng-show="CurrentUser.isLoggedIn()">Hello {{ CurrentUser.getCurrentUser().username }}</span> <a
+                      ng-show="CurrentUser.isLoggedIn()" ng-click="CurrentUser.logout()">Logout</a></p>
           </li>
         </ul>
       </div>
+      <div class="row">
+          <div class="col-md-8">
+              <div class="row">
+                  <div ng-view="" class="col-md-11">
 
-        <div> {{ posts }}</div>
-        <div class="container">
-            <div ng-repeat="post in posts" class="row">
-                <button class="btn btn-default">123</button>
-                <div class="btn-group btn-group-xs">+</div>
-                <div class="btn-group btn-group-xs">-</div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                  <div class="col-md-8">
-                      <div class="row" ng-view="">
-
-                      </div>
                   </div>
-                <div class="col-md-4" ng-show="CurrentUser.isLoggedIn()">
-                    <button class="btn btn-default" ng-show="CurrentUser.isLoggedIn()"><a href="#/submit">Submit new post</a></button>
-                </div>
-                <div class="col-md-4" ng-controller="LoginSignUpController" ng-hide="CurrentUser.isLoggedIn()">
-                    <div class="row">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default" ng-click="loginSignUpNav.displayLogin = true">Login</button>
-                            <button type="button" class="btn btn-default" ng-click="loginSignUpNav.displayLogin = false">Signup</button>
-                        </div>
-                    </div>
-                    <div class="row" ng-if="loginSignUpNav.displayLogin">
-                        <form name="loginForm" ng-controller="LoginController">
-                            <div class="form-group" ng-show="loginForm.submitClicked">
-                                <label for="login" ng-show="loginForm.login.$error.required" class="bg-danger">Login is required</label>
-                                <label for="password" ng-show="loginForm.password.$error.required" class="bg-danger">Password is required</label>
-                                <label ng-show="ctx.validationError" class="bg-danger">{{ctx.validationError}}</label>
-                            </div>
-                            <div class="form-group" ng-class="{'has-error' : loginForm.login.$error.required, 'has-success': !loginForm.login.$error.required}">
-                                <label for="login">Login</label>
-                                <input type="text" class="form-control" id="login" name="login" placeholder="Enter login" required="" ng-model="user.username"/>
-                            </div>
-                            <div class="form-group" ng-class="{'has-error' : loginForm.password.$error.required && loginForm.password.$dirty, 'has-success': !(loginForm.password.$error.required)}">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="user.password" required=""/>
-                            </div>
-                            <button type="submit" class="btn btn-submit" ng-click="loginForm.submitClicked = true; login(user)">Login</button>
-                        </form>
-                    </div>
+              </div>
 
-                    <div class="row" ng-if="!loginSignUpNav.displayLogin">
-                        <form name="signUpForm" ng-controller="SignUpController">
-                            <div class="form-group" ng-show="signUpForm.submitClicked">
-                                <label for="login" ng-show="signUpForm.login.$error.required">Login is required</label>
-                                <label for="password" ng-show="signUpForm.password.$error.required">Password is required</label>
-                                <label for="password" ng-show="signUpForm.repeated.$error.similar">Passwords do not match</label>
-                            </div>
-                            <div class="form-group" ng-class="{'has-error' : signUpForm.login.$error.required, 'has-success': !signUpForm.login.$error.required}">
-                                <label for="login">Login</label>
-                                <input type="text" class="form-control" id="login" name="login" placeholder="Enter login" required="" ng-model="user.username"/>
-                            </div>
-                            <div class="form-group" ng-class="{'has-error' : (signUpForm.password.$error.required || signUpForm.repeated.$error.similar) && signUpForm.repeated.$dirty && signUpForm.password.$dirty, 'has-success': !(signUpForm.login.$error.required && signUpForm.repeated.$error.similar)}">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="user.password" required=""/>
-                            </div>
-                            <div class="form-group">
-                                <label for="repeatPassword">Repeat password</label>
-                                <input type="password" class="form-control" id="repeatPassword" name="repeated"
-                                       dpt-similar="{{user.password}}"
-                                       placeholder="repeat password" ng-model="repeatedPass.pass" required=""/>
-                            </div>
-                            <button type="submit" class="btn btn-submit" ng-click="signUpForm.submitClicked = true; signUpIfValid(user)">Sign up</button>
-                        </form>
-                    </div>
+          </div>
+          <div class="col-md-4" ng-show="CurrentUser.isLoggedIn()">
+              <button class="btn btn-default pull-right" ng-show="CurrentUser.isLoggedIn()"><a href="#/submit">Submit new post</a></button>
+          </div>
+          <div class="col-md-4" ng-controller="LoginSignUpController" ng-hide="CurrentUser.isLoggedIn()">
+              <div class="row">
+                  <div class="btn-group pull-right">
+                      <button type="button" class="btn btn-default" ng-class="{'active': loginSignUpNav.displayLogin}" ng-click="loginSignUpNav.displayLogin = true">Login</button>
+                      <button type="button" class="btn btn-default" ng-class="{'active': !loginSignUpNav.displayLogin}" ng-click="loginSignUpNav.displayLogin = false">Signup</button>
+                  </div>
+              </div>
+              <div class="row" ng-if="loginSignUpNav.displayLogin">
+                  <form name="loginForm" ng-controller="LoginController">
+                      <div class="form-group" ng-show="loginForm.submitClicked">
+                          <label for="login" ng-show="loginForm.login.$error.required" class="bg-danger">Login is required</label>
+                          <label for="password" ng-show="loginForm.password.$error.required" class="bg-danger">Password is required</label>
+                          <label ng-show="ctx.validationError" class="bg-danger">{{ctx.validationError}}</label>
+                      </div>
+                      <div class="form-group" ng-class="{'has-error' : loginForm.login.$error.required && loginForm.login.$dirty, 'has-success': !loginForm.login.$error.required}">
+                          <label for="login">Login</label>
+                          <input type="text" class="form-control" id="login" name="login" placeholder="Enter login" required="" ng-model="user.username"/>
+                      </div>
+                      <div class="form-group" ng-class="{'has-error' : loginForm.password.$error.required && loginForm.password.$dirty, 'has-success': !(loginForm.password.$error.required)}">
+                          <label for="password">Password</label>
+                          <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="user.password" required=""/>
+                      </div>
+                      <button type="submit" class="btn btn-primary" ng-click="loginForm.submitClicked = true; login(user)">Login</button>
+                  </form>
+              </div>
 
-                </div>
-            </div>
-        </div>
+              <div class="row" ng-if="!loginSignUpNav.displayLogin">
+                  <form name="signUpForm" ng-controller="SignUpController">
+                      <div class="form-group" ng-show="signUpForm.submitClicked">
+                          <label for="login" ng-show="signUpForm.login.$error.required">Login is required</label>
+                          <label for="password" ng-show="signUpForm.password.$error.required">Password is required</label>
+                          <label for="password" ng-show="signUpForm.repeated.$error.similar">Passwords do not match</label>
+                      </div>
+                      <div class="form-group" ng-class="{'has-error' : signUpForm.login.$error.required && signUpForm.login.$dirty, 'has-success': !signUpForm.login.$error.required && signUpForm.login.$dirty}">
+                          <label for="login">Login</label>
+                          <input type="text" class="form-control" id="login" name="login" placeholder="Enter login" required="" ng-model="user.username"/>
+                      </div>
+                      <div class="form-group" ng-class="{'has-error' : (signUpForm.password.$error.required || signUpForm.repeated.$error.similar) && signUpForm.repeated.$dirty && signUpForm.password.$dirty, 'has-success': !(signUpForm.login.$error.required && signUpForm.repeated.$error.similar) && signUpForm.password.$dirty}">
+                          <label for="password">Password</label>
+                          <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="user.password" required=""/>
+                      </div>
+                      <div class="form-group">
+                          <label for="repeatPassword">Repeat password</label>
+                          <input type="password" class="form-control" id="repeatPassword" name="repeated"
+                                 dpt-similar="{{user.password}}"
+                                 placeholder="repeat password" ng-model="repeatedPass.pass" required=""/>
+                      </div>
+                      <button type="submit" class="btn btn-primary" ng-click="signUpForm.submitClicked = true; signUpIfValid(user)">Sign up</button>
+                  </form>
+              </div>
 
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-        <h3 class="text-muted">derpedditUi</h3>
+          </div>
       </div>
     </div>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+     <!--<script>-->
+       <!--(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){-->
+       <!--(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),-->
+       <!--m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)-->
+       <!--})(window,document,'script','//www.google-analytics.com/analytics.js','ga');-->
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
+       <!--ga('create', 'UA-XXXXX-X');-->
+       <!--ga('send', 'pageview');-->
+    <!--</script>-->
 
     <!-- build:js(.) scripts/oldieshim.js -->
     <!--[if lt IE 9]>
