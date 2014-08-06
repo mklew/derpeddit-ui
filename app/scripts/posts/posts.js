@@ -6,7 +6,7 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
 
             var baseUrl = backendBaseAddress + 'posts';
 
-            var currentOrder = 'score';
+            var currentMode = 'top';
 
             function doVote(post, negative) {
                 var url = baseUrl + '/' + post.id + '/vote';
@@ -15,11 +15,11 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
                 return UnwrapDataFromRequest($http.put(url, data))
             }
 
-            function getPosts(orderBy) {
-                var url = baseUrl + "?ordering=" + orderBy;
+            function getPosts(mode) {
+                var url = baseUrl + "?mode=" + mode;
                 $log.info('Making GET request to ', url);
                 return UnwrapDataFromRequest($http.get(url)).then(function (r) {
-                    currentOrder = orderBy;
+                    currentMode = mode;
                     return r;
                 }, function (e) {
                     return $q.reject(e);
@@ -35,14 +35,14 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
 
             return {
                 getPosts: function () {
-                    if (currentOrder == 'score') return this.getTop();
+                    if (currentMode == 'top') return this.getTop();
                     else return this.getNewest();
                 },
                 getTop: function () {
-                    return getPosts('score');
+                    return getPosts('top');
                 },
                 getNewest: function () {
-                    return getPosts('created');
+                    return getPosts('newest');
                 },
                 upvotePost: function (post) {
                     return doVote(post, false);
@@ -51,10 +51,10 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
                     return doVote(post, true);
                 },
                 displaysTop: function () {
-                    return currentOrder == 'score';
+                    return currentMode == 'top';
                 },
                 displaysNewest: function () {
-                    return currentOrder == 'created';
+                    return currentMode == 'newest';
                 },
                 submitText: function (post) {
                     return submitPost(post);

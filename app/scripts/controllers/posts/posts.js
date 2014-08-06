@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
-    .controller('PostsController', ['PostsService', '$scope', '_', function (PostService, $scope, _) {
+    .controller('PostsController', ['PostsService', '$scope', '_', '$location', function (PostService, $scope, _, $location) {
 
         var postsIndex = {
             posts: []
@@ -17,12 +17,14 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
 
         $scope.displayTopPosts = function () {
             PostService.getTop().then(function (posts) {
+                $location.url('/');
                 setPosts(posts);
             })
         };
 
         $scope.displayNewestPosts = function () {
             PostService.getNewest().then(function (posts) {
+                $location.url('/');
                 setPosts(posts);
             })
         };
