@@ -22,7 +22,7 @@
                     <label for="postText">Text</label>
                     <input type="text" class="form-control" id="postText" ng-model="post.text" name="postText">
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-default" ng-click="submitText()">Submit text</button>
             </form>
         </div>
         <div class="panel-body" ng-if="!submitCtx.submitText">
@@ -35,7 +35,7 @@
                     <label for="postLink">URL</label>
                     <input type="url" class="form-control" id="postLink" ng-model="post.link" name="postLink">
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-default" ng-click="submitLink()">Submit link</button>
             </form>
         </div>
     </div>

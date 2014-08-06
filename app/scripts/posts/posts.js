@@ -26,6 +26,13 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
                 });
             }
 
+            function submitPost(post) {
+                var url = baseUrl;
+                var data = angular.copy(post);
+                $log.info('Making GET request to ', url, 'with data', data);
+                return UnwrapDataFromRequest($http.post(url, data));
+            }
+
             return {
                 getPosts: function () {
                     if (currentOrder == 'score') return this.getTop();
@@ -48,6 +55,17 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
                 },
                 displaysNewest: function () {
                     return currentOrder == 'created';
+                },
+                submitText: function (post) {
+                    return submitPost(post);
+                },
+                submitLink: function (post) {
+                    return submitPost(post);
+                },
+                getPostById: function (id) {
+                    var url = baseUrl + '/' + id;
+                    $log.info('Making GET request to ', url);
+                    return UnwrapDataFromRequest($http.get(url))
                 }
             }
     }]);

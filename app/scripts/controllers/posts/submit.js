@@ -6,9 +6,26 @@ angular.module('dpt.posts')
             submitText : true
         }
     }])
-    .controller('SubmitTextFormController', ['$scope', function ($scope) {
+    .controller('SubmitTextFormController', ['$scope', 'PostsService', '$log', '$location', function ($scope, PostsService, $log, $location) {
+        $scope.post = {};
 
+        $scope.submitText = function() {
+            PostsService.submitText($scope.post).then(function(r){
+                $location.url('post/' + r.id);
+            }, function(e){
+                $log.error('submit text error', e);
+            })
+        }
     }])
-    .controller('SubmitLinkFormController', ['$scope', function ($scope) {
+    .controller('SubmitLinkFormController', ['$scope', 'PostsService', '$log', '$location', function ($scope, PostsService, $log, $location) {
 
+        $scope.post = {};
+
+        $scope.submitLink = function() {
+            PostsService.submitLink($scope.post).then(function(r){
+                $location.url('post/' + r.id);
+            }, function(e){
+                $log.error('submit link error', e);
+            })
+        }
     }]);

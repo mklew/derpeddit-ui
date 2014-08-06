@@ -42,4 +42,7 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
 
         $scope.loginSignUpNav = loginSignUpNav;
 
+    }])
+    .controller('PostController', ['post', '$scope', function(post, $scope){
+        $scope.post = post;
     }]);

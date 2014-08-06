@@ -34,6 +34,15 @@ angular
                 templateUrl: 'views/posts/submit.html',
                 controller: 'SubmitController'
             })
+            .when('/post/:id', {
+                templateUrl : 'views/posts/post.html',
+                controller: 'PostController',
+                resolve: {
+                    "post": ['$route', 'PostsService', function($route, PostsService){
+                        return PostsService.getPostById($route.current.params.id);
+                    }]
+                }
+            })
             .otherwise({
                 redirectTo: '/'
             });
