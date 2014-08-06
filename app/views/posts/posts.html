@@ -1,5 +1,5 @@
 <div ng-repeat="post in postsIndex.posts">
-    <div class="row">
+    <div class="row" ng-class="{'bg-primary': $first}">
         <div class="col-md-3">
             <div class="input-group">
                 <input type="text" class="form-control" ng-model="post.score">
