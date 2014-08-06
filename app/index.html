@@ -24,8 +24,8 @@
     <div class="container" ng-controller="PostsController">
       <div class="header">
         <ul class="nav nav-pills">
-          <li class="pull-left" ng-class="{'active': postsIndex.currentlyDisplays == 'top'}"><a ng-click="displayTopPosts()">top</a></li>
-          <li class="pull-left" ng-class="{'active': postsIndex.currentlyDisplays == 'newest'}"><a ng-click="displayNewestPosts()">newest</a></li>
+          <li class="pull-left" ng-class="{'active': displaysTop() }"><a ng-click="displayTopPosts()">top</a></li>
+          <li class="pull-left" ng-class="{'active': displaysNewest() }"><a ng-click="displayNewestPosts()">newest</a></li>
           <li class="pull-right">
               <span ng-show="CurrentUser.isLoggedIn()">Hello {{ CurrentUser.getCurrentUser().username }}</span>
               <a ng-show="CurrentUser.isLoggedIn()" ng-click="CurrentUser.logout()">Logout</a>

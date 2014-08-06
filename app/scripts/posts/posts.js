@@ -6,6 +6,8 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
 
             var baseUrl = backendBaseAddress + 'posts';
 
+            var currentOrder = 'score';
+
             function doVote(post, negative) {
                 var url = baseUrl + '/' + post.id + '/vote';
                 var data = { negative: negative };
@@ -13,16 +15,35 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
                 return UnwrapDataFromRequest($http.put(url, data))
             }
 
+            function getPosts(orderBy) {
+                var url = baseUrl + "?ordering=" + orderBy;
+                $log.info('Making GET request to ', url);
+                return UnwrapDataFromRequest($http.get(url)).then(function (r) {
+                    currentOrder = orderBy;
+                    return r;
+                }, function (e) {
+                    return $q.reject(e);
+                });
+            }
+
             return {
-                getAllPosts: function () {
-                    $log.info('Making GET request to ', baseUrl);
-                    return UnwrapDataFromRequest($http.get(baseUrl))
+                getTop: function () {
+                    return getPosts('score');
+                },
+                getNewest: function () {
+                    return getPosts('created');
                 },
                 upvotePost: function (post) {
                     return doVote(post, false);
                 },
                 downvotePost: function (post) {
                     return doVote(post, true);
+                },
+                displaysTop: function () {
+                    return currentOrder == 'score';
+                },
+                displaysNewest: function () {
+                    return currentOrder == 'created';
                 }
             }
     }]);
