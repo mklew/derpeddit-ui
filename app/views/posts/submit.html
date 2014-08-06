@@ -1,1 +1,43 @@
-submit new post blalala
+<div class="row">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-click="submitCtx.submitText = true"
+                        ng-class="{'active' : submitCtx.submitText}">Submit new text
+                </button>
+                <button type="button" class="btn btn-default" ng-click="submitCtx.submitText = false"
+                        ng-class="{'active' : !submitCtx.submitText}">Submit new link
+                </button>
+            </div>
+        </div>
+
+        <div class="panel-body" ng-if="submitCtx.submitText">
+            <form name="submitTextForm" ng-controller="SubmitTextFormController">
+                <div class="form-group">
+                    <label for="textPostTitle">Title</label>
+                    <input type="text" class="form-control" id="textPostTitle" placeholder="title" ng-model="post.title" name="postTitle" required="">
+                </div>
+                <div class="form-group">
+                    <label for="postText">Text</label>
+                    <input type="text" class="form-control" id="postText" ng-model="post.text" name="postText">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+        <div class="panel-body" ng-if="!submitCtx.submitText">
+            <form name="submitLinkForm" ng-controller="SubmitLinkFormController">
+                <div class="form-group">
+                    <label for="linkPostTitle">Title</label>
+                    <input type="text" class="form-control" id="linkPostTitle" placeholder="title" ng-model="post.title" name="postTitle" required="">
+                </div>
+                <div class="form-group">
+                    <label for="postLink">URL</label>
+                    <input type="url" class="form-control" id="postLink" ng-model="post.link" name="postLink">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+
+</div>

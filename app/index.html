@@ -50,7 +50,7 @@
                       </div>
                   </div>
                 <div class="col-md-4" ng-show="CurrentUser.isLoggedIn()">
-                    <button class="btn btn-default" ng-show="CurrentUser.isLoggedIn()">Submit new post</button>
+                    <button class="btn btn-default" ng-show="CurrentUser.isLoggedIn()"><a href="#/submit">Submit new post</a></button>
                 </div>
                 <div class="col-md-4" ng-controller="LoginSignUpController" ng-hide="CurrentUser.isLoggedIn()">
                     <div class="row">
@@ -154,6 +154,7 @@
         <script src="scripts/constants/constants.js"></script>
         <script src="scripts/posts/posts.js"></script>
         <script src="scripts/controllers/posts/posts.js"></script>
+        <script src="scripts/controllers/posts/submit.js"></script>
         <script src="scripts/users/users.js"></script>
         <script src="scripts/controllers/users/users-ctrls.js"></script>
         <script src="scripts/users/users-service.js"></script>
