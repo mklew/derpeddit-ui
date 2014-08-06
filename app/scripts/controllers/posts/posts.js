@@ -45,7 +45,35 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
         $scope.loginSignUpNav = loginSignUpNav;
 
     }])
-    .controller('PostController', ['postWithComments', '$scope', function (postWithComments, $scope) {
-        $scope.post = postWithComments.post;
-        $scope.comments = postWithComments.comments;
+    .controller('PostController', ['postWithComments', '$scope', 'CommentsService','$q', function (postWithComments, $scope, CommentsService, $q) {
+        $scope.postWithComments = postWithComments;
+
+        $scope.refresh = function () {
+            var postId = $scope.postWithComments.post.id;
+            var postStub = { id: postId };
+            var postP = PostsService.getPostById(postId).then(function (p) {
+                return {post: p}
+            });
+            var commentsP = CommentsService.getComments(postStub).then(function (c) {
+                return {comments: c};
+            });
+
+            return $q.all(postP, commentsP).then(function(postAndComments){
+                $scope.postWithComments = postWithComments;
+            });
+        }
+    }])
+    .controller('CommentFormController', ['$scope', 'CommentsService', function ($scope, CommentsService) {
+        // has post on parent scope
+        function init() {
+            $scope.comment = {};
+        }
+
+        $scope.doComment = function () {
+            CommentsService.comment($scope.postWithComments.post, $scope.comment).then(function (ignoredResponse) {
+                return $scope.refresh().then(function () {
+                    init();
+                });
+            })
+        }
     }]);

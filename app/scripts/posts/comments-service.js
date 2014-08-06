@@ -13,6 +13,11 @@ angular.module('dpt.posts.model')
                     var url = createUrl(post);
                     $log.info('Making GET request to ', url);
                     return UnwrapDataFromRequest($http.get(url));
+                },
+                comment: function (post, comment) {
+                    var url = createUrl(post);
+                    $log.info('Making POST request to ', url, 'with data', comment);
+                    return UnwrapDataFromRequest($http.post(url, comment));
                 }
             }
         }]);
