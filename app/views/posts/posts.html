@@ -1,5 +1,5 @@
 <div ng-repeat="post in postsIndex.posts">
-    <div class="row" ng-class="{'bg-primary': $first}">
+    <div class="row" ng-class="{'bg-info': $first}">
         <div class="col-md-3">
             <div class="input-group">
                 <input type="text" class="form-control" ng-model="post.score">
@@ -12,9 +12,10 @@
             </div>
         </div>
         <div class="col-md-9">
-            <p>{{ post.title }}</p>
+            <p ng-if="!isLinkPost(post)"><a ng-href="#/post/{{post.id}}">{{ post.title }}</a></p>
+            <p ng-if="isLinkPost(post)"><a ng-href="{{post.link}}">{{ post.title }}</a></p>
             <small>Submitted {{ post.created }} by <a>{{ post.owner.username }}</a></small>
-            <p>{{ post.comments_total }} comments</p>
+            <p><a ng-href="#/post/{{post.id}}">{{ post.comments_total }} comments</a></p>
         </div>
     </div>
 </div>
