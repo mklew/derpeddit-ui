@@ -35,10 +35,6 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
     }])
     .controller('PostListController', ['PostsService', '$scope', 'posts', function(PostsService, $scope, posts){
         $scope.postsIndex.posts = posts;
-
-        $scope.isLinkPost = function(post) {
-            return post.link != null && angular.isDefined(post.link)
-        };
     }])
     .controller('LoginSignUpController', ['$scope', function($scope){
 

@@ -1,22 +1,6 @@
 <div ng-repeat="post in postsIndex.posts">
-    <div class="row" ng-class="{'bg-info': $first}">
-        <div class="col-md-3">
-            <div class="input-group">
-                <input type="text" class="form-control" ng-model="post.score">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-xs" tabindex="-1">
-                        <span class="glyphicon glyphicon-chevron-up"></span>
-                        <span class="glyphicon glyphicon-chevron-down"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-9">
-            <p ng-if="!isLinkPost(post)"><a ng-href="#/post/{{post.id}}">{{ post.title }}</a></p>
-            <p ng-if="isLinkPost(post)"><a ng-href="{{post.link}}">{{ post.title }}</a></p>
-            <small>Submitted {{ post.created }} by <a>{{ post.owner.username }}</a></small>
-            <p><a ng-href="#/post/{{post.id}}">{{ post.comments_total }} comments</a></p>
-        </div>
+    <div class="row" ng-class="{'bg-info': $first}" dpt-post-summary="" ng-model="post">
+
     </div>
 </div>
 
