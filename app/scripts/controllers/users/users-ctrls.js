@@ -10,13 +10,18 @@ angular.module('dpt.users')
             // from view
         };
 
+        var ctx = {
+
+        };
+
         $scope.user = user;
         $scope.repeatedPassword = repeatedPass;
+        $scope.ctx = ctx;
 
         $scope.signUpIfValid = function (user) {
             function signUpSuccess(res) {
                 $log.info('SignUp success', res)
-
+                delete ctx.validationError;
                 CurrentUser.sync().then(function(){
 
                 });
@@ -24,6 +29,8 @@ angular.module('dpt.users')
 
             function signUpFailure(e) {
                 $log.error('SignUp failure', e)
+                ctx.validationError = e.data['non_field_errors'][0];
+                console.log('ctx.validationError ', ctx);
             }
 
             if ($scope.signUpForm.$valid) {

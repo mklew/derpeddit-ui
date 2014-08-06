@@ -28,8 +28,8 @@
           <li class="pull-left" id="topPosts" ng-class="{'active': displaysTop() }"><a ng-click="displayTopPosts()">top</a></li>
           <li class="pull-left" id="newestPosts" ng-class="{'active': displaysNewest() }"><a ng-click="displayNewestPosts()">newest</a></li>
           <li class="pull-right">
-              <p><span ng-show="CurrentUser.isLoggedIn()">Hello {{ CurrentUser.getCurrentUser().username }}</span> <a
-                      ng-show="CurrentUser.isLoggedIn()" ng-click="CurrentUser.logout()">Logout</a></p>
+              <p><span ng-show="CurrentUser.isLoggedIn()" class="dpt-greeting">Hello {{ CurrentUser.getCurrentUser().username }}</span> <a
+                      ng-show="CurrentUser.isLoggedIn()" ng-click="CurrentUser.logout()" id="logout-link">Logout</a></p>
           </li>
         </ul>
       </div>
@@ -43,17 +43,17 @@
 
           </div>
           <div class="col-md-4" ng-show="CurrentUser.isLoggedIn()">
-              <button class="btn btn-default pull-right" ng-show="CurrentUser.isLoggedIn()"><a href="#/submit">Submit new post</a></button>
+              <button class="btn btn-default pull-right dpt-new-post-btn" ng-show="CurrentUser.isLoggedIn()"><a href="#/submit">Submit new post</a></button>
           </div>
-          <div class="col-md-4" ng-controller="LoginSignUpController" ng-hide="CurrentUser.isLoggedIn()">
+          <div class="col-md-4 dpt-login-and-signup" ng-controller="LoginSignUpController" ng-hide="CurrentUser.isLoggedIn()">
               <div class="row">
                   <div class="btn-group pull-right">
-                      <button type="button" class="btn btn-default" ng-class="{'active': loginSignUpNav.displayLogin}" ng-click="loginSignUpNav.displayLogin = true">Login</button>
-                      <button type="button" class="btn btn-default" ng-class="{'active': !loginSignUpNav.displayLogin}" ng-click="loginSignUpNav.displayLogin = false">Signup</button>
+                      <button type="button" class="btn btn-default dpt-login" ng-class="{'active': loginSignUpNav.displayLogin}" ng-click="loginSignUpNav.displayLogin = true">Login</button>
+                      <button type="button" class="btn btn-default dpt-sign-up" ng-class="{'active': !loginSignUpNav.displayLogin}" ng-click="loginSignUpNav.displayLogin = false">Signup</button>
                   </div>
               </div>
               <div class="row" ng-if="loginSignUpNav.displayLogin">
-                  <form name="loginForm" ng-controller="LoginController">
+                  <form name="loginForm" id="loginForm" ng-controller="LoginController">
                       <div class="form-group" ng-show="loginForm.submitClicked">
                           <label for="login" ng-show="loginForm.login.$error.required" class="bg-danger">Login is required</label>
                           <label for="password" ng-show="loginForm.password.$error.required" class="bg-danger">Password is required</label>
@@ -72,11 +72,12 @@
               </div>
 
               <div class="row" ng-if="!loginSignUpNav.displayLogin">
-                  <form name="signUpForm" ng-controller="SignUpController">
+                  <form name="signUpForm" id="signUpForm" ng-controller="SignUpController">
                       <div class="form-group" ng-show="signUpForm.submitClicked">
-                          <label for="login" ng-show="signUpForm.login.$error.required">Login is required</label>
-                          <label for="password" ng-show="signUpForm.password.$error.required">Password is required</label>
-                          <label for="password" ng-show="signUpForm.repeated.$error.similar">Passwords do not match</label>
+                          <label for="login" class="bg-danger" id="dpt-required-login-error" ng-show="signUpForm.login.$error.required">Login is required</label>
+                          <label for="password" class="bg-danger" ng-show="signUpForm.password.$error.required">Password is required</label>
+                          <label for="password" class="bg-danger" id="dpt-passwords-do-not-match" ng-show="signUpForm.repeated.$error.similar">Passwords didn't match</label>
+                          <label id="dpt-sign-up-error" ng-show="ctx.validationError" class="bg-danger">{{ctx.validationError}}</label>
                       </div>
                       <div class="form-group" ng-class="{'has-error' : signUpForm.login.$error.required && signUpForm.login.$dirty, 'has-success': !signUpForm.login.$error.required && signUpForm.login.$dirty}">
                           <label for="login">Login</label>
@@ -92,7 +93,7 @@
                                  dpt-similar="{{user.password}}"
                                  placeholder="repeat password" ng-model="repeatedPass.pass" required=""/>
                       </div>
-                      <button type="submit" class="btn btn-primary" ng-click="signUpForm.submitClicked = true; signUpIfValid(user)">Sign up</button>
+                      <button type="submit" class="btn btn-primary dpt-sign-up-btn" ng-click="signUpForm.submitClicked = true; signUpIfValid(user)">Sign up</button>
                   </form>
               </div>
 
