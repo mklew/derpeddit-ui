@@ -44,10 +44,10 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
                 getNewest: function () {
                     return getPosts('newest');
                 },
-                upvotePost: function (post) {
+                upVotePost: function (post) {
                     return doVote(post, false);
                 },
-                downvotePost: function (post) {
+                downVotePost: function (post) {
                     return doVote(post, true);
                 },
                 displaysTop: function () {

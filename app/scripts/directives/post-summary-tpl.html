@@ -3,8 +3,8 @@
         <input type="text" class="form-control" ng-model="post.score">
         <div class="input-group-btn">
             <button type="button" class="btn btn-xs" tabindex="-1">
-                <span class="glyphicon glyphicon-chevron-up"></span>
-                <span class="glyphicon glyphicon-chevron-down"></span>
+                <span class="glyphicon glyphicon-chevron-up" ng-if="CurrentUser.isLoggedIn()" ng-click="upVote()"></span>
+                <span class="glyphicon glyphicon-chevron-down" ng-if="CurrentUser.isLoggedIn()" ng-click="downVote()"></span>
             </button>
         </div>
     </div>

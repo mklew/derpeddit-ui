@@ -59,7 +59,7 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
             });
 
             return $q.all(postP, commentsP).then(function(postAndComments){
-                $scope.postWithComments = postWithComments;
+                return $scope.postWithComments = postWithComments;
             });
         }
     }])
