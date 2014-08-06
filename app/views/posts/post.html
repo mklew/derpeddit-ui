@@ -1,4 +1,11 @@
-This is view of the post
-        <pre>
-            {{ post }}
-        </pre>
+<div class="row" dpt-post-summary="" ng-model="post">
+
+</div>
+<div class="col-md-offset-3 col-lg-9">
+    <p ng-if="post.text">{{post.text}}</p>
+
+    <div ng-repeat="comment in comments">
+        <small><a>{{comment.owner.username}}</a> {{comment.created}}</small>
+        <p>{{comment.text}}</p>
+    </div>
+</div>

@@ -2,7 +2,7 @@
 
 angular.module('utils', [])
     .service('_', function () { // injectable underscore
-        return _;
+        return window._;
     })
     .factory('UnwrapDataFromRequest', ['$q', function ($q) {
         return function (request) {

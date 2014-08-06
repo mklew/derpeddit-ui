@@ -45,6 +45,7 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
         $scope.loginSignUpNav = loginSignUpNav;
 
     }])
-    .controller('PostController', ['post', '$scope', function(post, $scope){
-        $scope.post = post;
+    .controller('PostController', ['postWithComments', '$scope', function (postWithComments, $scope) {
+        $scope.post = postWithComments.post;
+        $scope.comments = postWithComments.comments;
     }]);
