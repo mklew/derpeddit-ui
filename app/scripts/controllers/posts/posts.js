@@ -8,6 +8,7 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
         };
 
         function setPosts(posts) {
+            postsIndex.posts = postsIndex.posts || [];
             postsIndex.posts.length = 0;
             postsIndex.posts.push.apply(postsIndex.posts, posts);
         }
@@ -30,6 +31,9 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
 
         $scope.displaysNewest = PostService.displaysNewest;
     }])
+    .controller('PostListController', ['PostsService', '$scope', 'posts', function(PostsService, $scope, posts){
+        $scope.postsIndex.posts = posts;
+    }])
     .controller('LoginSignUpController', ['$scope', function($scope){
 
         var loginSignUpNav = {
@@ -37,5 +41,8 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
         };
 
         $scope.loginSignUpNav = loginSignUpNav;
+
+    }])
+    .controller('SubmitController', ['$scope', function ($scope) {
 
     }]);

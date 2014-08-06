@@ -27,6 +27,10 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
             }
 
             return {
+                getPosts: function () {
+                    if (currentOrder == 'score') return this.getTop();
+                    else return this.getNewest();
+                },
                 getTop: function () {
                     return getPosts('score');
                 },

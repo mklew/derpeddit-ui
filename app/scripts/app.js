@@ -21,18 +21,23 @@ angular
     ])
     .config(function ($routeProvider) {
         $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  })
+            .when('/', {
+                templateUrl: 'views/posts/posts.html',
+                resolve: {
+                    "posts": ['PostsService', function (PostsService) {
+                        return PostsService.getPosts();
+                    }]
+                },
+                controller : 'PostListController'
+            })
+            .when('/submit', {
+                templateUrl: 'views/posts/submit.html',
+                controller: 'SubmitController'
+            })
+            .otherwise({
+                redirectTo: '/'
+            });
+    })
     .controller('AppController', ['$scope', 'CurrentUser', function($scope, CurrentUser){
         $scope.CurrentUser = CurrentUser;
     }]);
