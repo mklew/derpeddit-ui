@@ -38,15 +38,18 @@ angular
                 templateUrl : 'views/posts/post.html',
                 controller: 'PostController',
                 resolve: {
-                    "postWithComments": ['$route', 'PostsService', 'CommentsService', function($route, PostsService, CommentsService){
-                        return PostsService.getPostById($route.current.params.id).then(function(post){
-                            return CommentsService.getComments(post).then(function(comments){
-                                return {
-                                    post : post,
-                                    comments : comments
-                                }
-                            })
+                    "postWithComments": ['$route', 'PostsService', 'CommentsService', '$q', function ($route, PostsService, CommentsService, $q) {
+                        var postId = $route.current.params.id;
+                        var postStub = { id: postId };
+                        var postP = PostsService.getPostById(postId).then(function (p) {
+                            return {post: p}
                         });
+                        var commentsP = CommentsService.getComments(postStub).then(function (c) {
+                            return {comments: c};
+                        });
+
+                        return $q.all(postP, commentsP);
+
                     }]
                 }
             })
