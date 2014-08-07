@@ -1,3 +1,4 @@
+'use strict';
 angular.module('dpt.directives', []).directive('dptSimilar', function () {
 
     return {

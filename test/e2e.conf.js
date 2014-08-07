@@ -5,7 +5,7 @@ exports.config = {
   },
   specs: ['e2e/protractor/**/*.js'],//where you put your protractor scripts
   rootElement: 'body',
-  baseUrl: 'http://localhost:9000',//base url 
+  baseUrl: 'http://127.0.0.1:8999',//base url
  
   jasmineNodeOpts: {
     // onComplete will be called just before the driver quits.

@@ -74,10 +74,10 @@
               <div class="row" ng-if="!loginSignUpNav.displayLogin">
                   <form name="signUpForm" id="signUpForm" ng-controller="SignUpController">
                       <div class="form-group" ng-show="signUpForm.submitClicked">
-                          <label for="login" class="bg-danger" id="dpt-required-login-error" ng-show="signUpForm.login.$error.required">Login is required</label>
-                          <label for="password" class="bg-danger" ng-show="signUpForm.password.$error.required">Password is required</label>
-                          <label for="password" class="bg-danger" id="dpt-passwords-do-not-match" ng-show="signUpForm.repeated.$error.similar">Passwords didn't match</label>
-                          <label id="dpt-sign-up-error" ng-show="ctx.validationError" class="bg-danger">{{ctx.validationError}}</label>
+                          <label for="login" class="control-label bg-danger" id="dpt-required-login-error" ng-show="signUpForm.login.$error.required">Login is required</label>
+                          <label for="password" class="control-label bg-danger" ng-show="signUpForm.password.$error.required">Password is required</label>
+                          <label for="password" class="control-label bg-danger" id="dpt-passwords-do-not-match" ng-show="signUpForm.repeated.$error.similar">Passwords didn't match</label>
+                          <label for="login" id="dpt-sign-up-error" ng-if="ctx.validationError" class="control-label bg-danger">{{ctx.validationError}}</label>
                       </div>
                       <div class="form-group" ng-class="{'has-error' : signUpForm.login.$error.required && signUpForm.login.$dirty, 'has-success': !signUpForm.login.$error.required && signUpForm.login.$dirty}">
                           <label for="login">Login</label>

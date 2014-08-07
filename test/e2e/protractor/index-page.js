@@ -6,7 +6,7 @@ var hasClass = function (element, cls) {
 
 describe('index page scenarios', function() {
     beforeEach(function(){
-        browser.get('http://localhost:9000/');
+        browser.get('/');
     });
 
     function postsSortedByScore() {

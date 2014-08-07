@@ -9,7 +9,7 @@ angular.module('dpt.users')
             function doPost(action, user) {
                 var url = baseUrl + action;
                 $log.info('Making POST request to ', url, 'with user', user);
-                return UnwrapDataFromRequest($http.post(url, angular.copy(user)))
+                return UnwrapDataFromRequest($http.post(url, angular.copy(user)));
             }
 
             return {
@@ -25,9 +25,9 @@ angular.module('dpt.users')
                 profile: function () {
                     var url = baseUrl + 'profile';
                     $log.info('Making POST request to ', url);
-                    return UnwrapDataFromRequest($http.get(url))
+                    return UnwrapDataFromRequest($http.get(url));
                 }
-            }
+            };
         }])
     .service('CurrentUser', ['UserService', '$q', function (UserService, $q) {
 
@@ -58,7 +58,7 @@ angular.module('dpt.users')
             }, function () {
                 user.isLoggedIn = false;
                 return $q.reject();
-            })
+            });
         };
 
         this.init = function () {
@@ -79,8 +79,8 @@ angular.module('dpt.users')
                 user.profile = user.profile || {};
                 angular.extend(user.profile, response);
                 return response;
-            }, function(i){ return $q.reject(i); })
-        }
+            }, function(i){ return $q.reject(i); });
+        };
 
     }])
     .run(['CurrentUser', function (CurrentUser) {

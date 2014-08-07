@@ -11,7 +11,7 @@ describe('signup scenarios', function () {
     }
 
     beforeEach(function () {
-        browser.get('http://localhost:9000/');
+        browser.get('/');
         tryToLogout();
     });
 
@@ -108,15 +108,17 @@ describe('signup scenarios', function () {
     describe('Scenario: Server side validation', function () {
         it('should report error', function () {
             var username = successfulSignUp();
+            expect(element(by.css('.dpt-greeting')).getText()).toMatch('.*' + username + '.*');
             tryToLogout();
             console.log('reusing usename', username);
-            // TODO check that sign-up button is visible
             clickSignUp();
             enterUsernameAndPass(username);
-            clickSignUpBtn();
             var e = element(by.id('dpt-sign-up-error'));
-            expect(e.getCssValue('display')).toNotMatch('none.*');
-            expect(e.getText()).toMatch('.*taken.*');
+            expect(e.isPresent()).toBe(false);
+            clickSignUpBtn().then(function(){
+                expect(e.isPresent()).toBe(true);
+            });
+
         });
     })
 });
