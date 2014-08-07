@@ -8,9 +8,8 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
 
             var currentMode = 'top';
 
-            function doVote(post, negative) {
+            function doVote(post, data) {
                 var url = baseUrl + '/' + post.id + '/vote';
-                var data = { negative: negative };
                 $log.info('Making PUT request to ', url, 'with data', data);
                 return UnwrapDataFromRequest($http.put(url, data))
             }
@@ -45,10 +44,10 @@ angular.module('dpt.posts.model', ['dpt.constants', 'utils'])
                     return getPosts('newest');
                 },
                 upVotePost: function (post) {
-                    return doVote(post, false);
+                    return doVote(post, {positive: true});
                 },
                 downVotePost: function (post) {
-                    return doVote(post, true);
+                    return doVote(post, {negative: true});
                 },
                 displaysTop: function () {
                     return currentMode == 'top';
