@@ -9,19 +9,24 @@ describe('View a post scenarios', function () {
         utils.tryToLogout();
     });
 
+    function getNewestPost() {
+        element(by.id('newestPosts')).click();
+        return element.all(by.repeater('post in postsIndex.posts')).first();
+    }
+
     describe('Scenario: Text post', function () {
         it('should notice comments below', function () {
             var postTitle = "Some text post";
             var postText = "some text content";
             createPostParts.createTextPostWithComments(postTitle, postText);
-            element(by.id('newestPosts')).click();
-            var createdPost = element.all(by.repeater('post in postsIndex.posts')).first();
+            utils.tryToLogout();
+            var createdPost = getNewestPost();
 
             //When I click on a text post link
             createdPost.element(by.binding('post.title')).click();
             //Then I should see posts text and title
-            expect(element(by.css('.dpt-post-title'))).toMatch(postTitle);
-            expect(element(by.css('.dpt-post-text'))).toMatch(postText);
+            expect(element(by.css('.dpt-post-title')).getText()).toMatch(postTitle);
+            expect(element(by.css('.dpt-post-text')).getText()).toMatch(postText);
             //And I should notice comments below
             expect(element.all(by.repeater('comment in postWithComments.comments')).count()).toBeGreaterThan(0);
         });
@@ -29,8 +34,16 @@ describe('View a post scenarios', function () {
 
     describe('Scenario: Link post', function () {
         it('should be directed to post link URL', function () {
+            var postLink = "http://localhost:9000/";
+            var postTitle = "To localhost";
+            createPostParts.createLinkPost(postTitle, postLink);
+            utils.tryToLogout();
+            element(by.id('newestPosts')).click();
+            var createdPost = getNewestPost();
             //When I click on a link post link
+            createdPost.element(by.css('.dpt-post-title')).element(by.tagName('a')).click();
             //Then I should be directed to post link URL
+            expect(browser.driver.getCurrentUrl()).toMatch('.*'+postLink+'.*');
         });
     });
 
