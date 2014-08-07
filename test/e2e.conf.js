@@ -18,6 +18,10 @@ exports.config = {
     includeStackTrace: true,
     // Default time to wait in ms before a test fails.
     defaultTimeoutInterval: 30000
- 
-  }
-}
+
+  },
+
+    suites: {
+        voting: 'e2e/protractor/voting.js'
+    }
+};
