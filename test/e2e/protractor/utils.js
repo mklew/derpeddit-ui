@@ -1,3 +1,7 @@
+function randomNumber() {
+    return Math.floor((Math.random() * 90000000) + 1);
+}
+
 module.exports = {
     tryToLogout: function tryToLogout() {
         element(by.id('logout-link')).getCssValue('display').then(function (v) {
@@ -10,10 +14,9 @@ module.exports = {
         });
     },
     randomUsername: function randomUsername() {
-        function randomNumber() {
-            return Math.floor((Math.random() * 90000000) + 1);
-        }
-
         return 'John' + randomNumber() + '-' + randomNumber() + '-' + randomNumber()
+    },
+    randomComment: function(){
+        return "Woohoo" + randomNumber();
     }
 };

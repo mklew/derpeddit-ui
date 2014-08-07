@@ -4,6 +4,8 @@ var loginFormObj = require('./objects/loginForm.js');
 
 var signUpParts = require('./sign-up-parts.js');
 
+var createPostParts = require('./create-post-parts.js');
+
 describe('Create post scenarios', function(){
     beforeEach(function () {
         browser.get('/');
@@ -14,26 +16,10 @@ describe('Create post scenarios', function(){
         var loginForm = loginFormObj.instance();
     });
 
-    function clickSubmitNewPost(){
-        element(by.css('.dpt-new-post-btn')).click();
-    }
-
-    function givenLoggedInAndOnSubmitNewPost() {
-        var username = signUpParts.successfulSignUp();
-        utils.tryToLogout();
-        var loginForm = loginFormObj.instance();
-        loginForm.get();
-        loginForm.setLogin(username);
-        loginForm.setPassword();
-        loginForm.login();
-
-        //And I had clicked on submit post button
-        clickSubmitNewPost();
-    }
 
     describe('Scenario: Create a text post', function(){
         it('should see posts text and title', function () {
-            givenLoggedInAndOnSubmitNewPost()
+            createPostParts.givenLoggedInAndOnSubmitNewPost();
 
             //And I have entered post title and text
             var textForm = element(by.id('submitTextForm'));
@@ -53,7 +39,7 @@ describe('Create post scenarios', function(){
 
     describe('Scenario: Create a link post', function () {
         it('should notice that title is a href link with URL', function () {
-            givenLoggedInAndOnSubmitNewPost();
+            createPostParts.givenLoggedInAndOnSubmitNewPost();
             //And I had selected submit link tab
             element(by.css('.dpt-to-new-link')).click();
 
