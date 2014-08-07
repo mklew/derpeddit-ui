@@ -45,22 +45,22 @@ angular.module('dpt.posts', ['dpt.posts.model', 'utils'])
         $scope.loginSignUpNav = loginSignUpNav;
 
     }])
-    .controller('PostController', ['postWithComments', '$scope', 'CommentsService','$q', function (postWithComments, $scope, CommentsService, $q) {
-        $scope.postWithComments = postWithComments;
+    .controller('PostController', ['post', 'comments', '$scope', 'CommentsService','$q', 'PostsService', function (post, comments, $scope, CommentsService, $q, PostsService) {
+        $scope.postWithComments = {
+            post : post,
+            comments : comments
+        };
 
         $scope.refresh = function () {
             var postId = $scope.postWithComments.post.id;
             var postStub = { id: postId };
             var postP = PostsService.getPostById(postId).then(function (p) {
-                return {post: p}
+                return $scope.postWithComments.post = p;
             });
             var commentsP = CommentsService.getComments(postStub).then(function (c) {
-                return {comments: c};
+                return $scope.postWithComments.comments = c;
             });
-
-            return $q.all(postP, commentsP).then(function(postAndComments){
-                return $scope.postWithComments = postWithComments;
-            });
+            return $q.all(postP, commentsP);
         }
     }])
     .controller('CommentFormController', ['$scope', 'CommentsService', function ($scope, CommentsService) {

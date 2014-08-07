@@ -5,7 +5,7 @@ angular.module('dpt.posts.model')
         function (backendBaseAddress, $http, $q, $log, UnwrapDataFromRequest) {
 
             function createUrl(post) {
-                return backendBaseAddress + "posts/" + post.id;
+                return backendBaseAddress + "posts/" + post.id + '/comment';
             }
 
             return {
