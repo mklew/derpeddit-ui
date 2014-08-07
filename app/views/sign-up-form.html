@@ -1,0 +1,35 @@
+<form name="signUpForm" id="signUpForm" ng-controller="SignUpController">
+    <div class="row" ng-show="signUpForm.submitClicked">
+        <div class="col-md-12 form-group">
+            <ul>
+                <li ng-show="signUpForm.login.$error.required">
+                    <label for="login" class="control-label bg-danger" id="dpt-required-login-error" ng-show="signUpForm.login.$error.required">Login is required</label>
+                </li>
+                <li ng-show="signUpForm.password.$error.required">
+                    <label for="password" class="control-label bg-danger" ng-show="signUpForm.password.$error.required">Password is required</label>
+                </li>
+                <li ng-show="signUpForm.repeated.$error.similar">
+                    <label for="password" class="control-label bg-danger" id="dpt-passwords-do-not-match" ng-show="signUpForm.repeated.$error.similar">Passwords didn't match</label>
+                </li>
+                <li ng-if="ctx.validationError">
+                    <label for="login" id="dpt-sign-up-error" ng-if="ctx.validationError" class="control-label bg-danger">{{ctx.validationError}}</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="form-group" ng-class="{'has-error' : signUpForm.login.$error.required && signUpForm.login.$dirty, 'has-success': !signUpForm.login.$error.required && signUpForm.login.$dirty}">
+        <label for="login">Login</label>
+        <input type="text" class="form-control" id="login" name="login" placeholder="Enter login" required="" ng-model="user.username"/>
+    </div>
+    <div class="form-group" ng-class="{'has-error' : (signUpForm.password.$error.required || signUpForm.repeated.$error.similar) && signUpForm.repeated.$dirty && signUpForm.password.$dirty, 'has-success': !(signUpForm.login.$error.required && signUpForm.repeated.$error.similar) && signUpForm.password.$dirty}">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="user.password" required=""/>
+    </div>
+    <div class="form-group">
+        <label for="repeatPassword">Repeat password</label>
+        <input type="password" class="form-control" id="repeatPassword" name="repeated"
+               dpt-similar="{{user.password}}"
+               placeholder="repeat password" ng-model="repeatedPass.pass" required=""/>
+    </div>
+    <button type="submit" class="btn btn-primary dpt-sign-up-btn" ng-click="signUpForm.submitClicked = true; signUpIfValid(user)">Sign up</button>
+</form>

@@ -1,0 +1,16 @@
+<form name="loginForm" id="loginForm" ng-controller="LoginController">
+    <div class="form-group" ng-show="loginForm.submitClicked">
+        <label for="login" ng-show="loginForm.login.$error.required" class="bg-danger">Login is required</label>
+        <label for="password" ng-show="loginForm.password.$error.required" class="bg-danger">Password is required</label>
+        <label ng-show="ctx.validationError" class="bg-danger">{{ctx.validationError}}</label>
+    </div>
+    <div class="form-group" ng-class="{'has-error' : loginForm.login.$error.required && loginForm.login.$dirty, 'has-success': !loginForm.login.$error.required}">
+        <label for="login">Login</label>
+        <input type="text" class="form-control" id="login" name="login" placeholder="Enter login" required="" ng-model="user.username"/>
+    </div>
+    <div class="form-group" ng-class="{'has-error' : loginForm.password.$error.required && loginForm.password.$dirty, 'has-success': !(loginForm.password.$error.required)}">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="user.password" required=""/>
+    </div>
+    <button type="submit" class="btn btn-primary dpt-login-btn" ng-click="loginForm.submitClicked = true; login(user)">Login</button>
+</form>
