@@ -12,9 +12,9 @@
         </div>
     </div>
     <div class="col-md-9">
-        <p ng-if="!isLinkPost(post)"><a ng-href="#/post/{{post.id}}">{{ post.title }}</a></p>
+        <p ng-if="!isLinkPost(post)" class="dpt-post-title"><a ng-href="#/post/{{post.id}}">{{ post.title }}</a></p>
 
-        <p ng-if="isLinkPost(post)"><a ng-href="{{post.link}}">{{ post.title }}</a></p>
+        <p ng-if="isLinkPost(post)" class="dpt-post-title"><a ng-href="{{post.link}}">{{ post.title }}</a></p>
         <small>Submitted {{ post.created }} by <a>{{ post.owner.username }}</a></small>
         <p><a ng-href="#/post/{{post.id}}">{{ post.comments_total }} comments</a></p>
     </div>

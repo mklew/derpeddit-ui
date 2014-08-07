@@ -1,5 +1,9 @@
 var utils = require('./utils.js');
 
+var loginFormObj = require('./objects/loginForm.js');
+
+var signUpParts = require('./sign-up-parts.js');
+
 describe('Create post scenarios', function(){
     beforeEach(function () {
         browser.get('/');
@@ -7,9 +11,45 @@ describe('Create post scenarios', function(){
     });
 
     beforeEach(function() {
-
+        var loginForm = loginFormObj.instance();
     });
 
+    function clickSubmitNewPost(){
+        element(by.css('.dpt-new-post-btn')).click();
+    }
+
+    describe('Scenario: Create a text post', function(){
+        it('should see posts text and title', function () {
+            var username = signUpParts.successfulSignUp();
+            utils.tryToLogout();
+            var loginForm = loginFormObj.instance();
+            loginForm.get();
+            loginForm.setLogin(username);
+            loginForm.setPassword();
+            loginForm.login();
+
+            //And I had clicked on submit post button
+            clickSubmitNewPost();
+
+            //And I have entered post title and text
+            var textForm = element(by.id('submitTextForm'));
+            var postTitle = 'Awesome content inside';
+            var postText = 'Barnabus "Barney" Stinson';
+            textForm.element(by.id('textPostTitle')).sendKeys(postTitle);
+            textForm.element(by.id('postText')).sendKeys(postTitle);
+
+            //When I click on submit new text post
+            textForm.element(by.css('.dpt-submit-text-post')).click();
+
+            //Then I should see posts text and title
+            expect(element(by.css('.dpt-post-title')).getText()).toMatch(postTitle);
+            expect(element(by.css('.dpt-post-text')).getText()).toMatch(postText);
+        });
+    });
+
+    describe('Scenario: Create a link post', function () {
+
+    });
 
 });
 //Scenario: Create a text post
