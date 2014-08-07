@@ -14,7 +14,7 @@
         </form>
     </div>
     <div class="row" ng-repeat="comment in postWithComments.comments">
-        <small><a>{{comment.owner.username}}</a> {{comment.created}}</small>
+        <small><a>{{comment.owner.username}}</a> {{comment.created | created}}</small>
         <p>{{comment.text}}</p>
     </div>
 </div>

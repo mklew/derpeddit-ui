@@ -20,3 +20,6 @@ angular.module('utils', [])
             return deferred.promise;
         }
     }])
+    .factory('Moment', function(){
+        return window.moment;
+    });
