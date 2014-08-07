@@ -1,31 +1,18 @@
-describe('signup scenarios', function () {
-    function tryToLogout() {
-        element(by.id('logout-link')).getCssValue('display').then(function (v) {
-            if (!/none.*/.test(v)) {
-                element(by.id('logout-link')).click();
-            }
-            else {
-                console.log('log out link is not visible')
-            }
-        });
-    }
+var utils = require('./utils.js');
 
+var signUpParts = require('./sign-up-parts.js');
+
+describe('signup scenarios', function () {
     beforeEach(function () {
         browser.get('/');
-        tryToLogout();
+        utils.tryToLogout();
     });
 
     afterEach(function () {
-        tryToLogout();
+        utils.tryToLogout();
     });
 
-    function randomUsername() {
-        function randomNumber() {
-            return Math.floor((Math.random() * 90000000) + 1);
-        }
 
-        return 'John' + randomNumber() + '-' + randomNumber() + '-' + randomNumber()
-    }
 
     function clickSignUp() {
         element(by.css('.dpt-sign-up')).click();
@@ -45,7 +32,7 @@ describe('signup scenarios', function () {
         //And I clicked on a sign up link
         clickSignUp();
         //And I entered login and password
-        var username = randomUsername();
+        var username = utils.randomUsername();
         var form = element(by.id('signUpForm'));
         enterUsernameAndPass(username);
         //And I repeated password once more matching previous input
@@ -60,7 +47,7 @@ describe('signup scenarios', function () {
         //Given I am on a main page
 
         it('should signup successfully', function () {
-            var username = successfulSignUp();
+            var username = signUpParts.successfulSignUp();
 
             //Then I should see "Submit new post" button
             expect(element(by.css('.dpt-new-post-btn:not(ng-hide)')).isPresent()).toBe(true);
@@ -75,7 +62,7 @@ describe('signup scenarios', function () {
 
         it('should report mismatched passwords', function () {
             clickSignUp();
-            var username = randomUsername();
+            var username = utils.randomUsername();
             enterUsernameAndPass(username);
             var form = element(by.id('signUpForm'));
             form.element(by.id('repeatPassword')).sendKeys('NOT MATCHED');
@@ -84,8 +71,6 @@ describe('signup scenarios', function () {
 
             expect(form.element(by.id('dpt-passwords-do-not-match')).getText()).toEqual("Passwords didn't match");
         });
-
-
     });
 
     describe('Scenario: Missing fields validation', function () {
@@ -107,9 +92,9 @@ describe('signup scenarios', function () {
     //Then I should see error message from derpeddit
     describe('Scenario: Server side validation', function () {
         it('should report error', function () {
-            var username = successfulSignUp();
+            var username = signUpParts.successfulSignUp();
             expect(element(by.css('.dpt-greeting')).getText()).toMatch('.*' + username + '.*');
-            tryToLogout();
+            utils.tryToLogout();
             console.log('reusing usename', username);
             clickSignUp();
             enterUsernameAndPass(username);

@@ -22,6 +22,7 @@ angular.module('dpt.users')
             function signUpSuccess(res) {
                 $log.info('SignUp success', res)
                 delete ctx.validationError;
+                $scope.user = {};
                 CurrentUser.sync().then(function(){
 
                 });
