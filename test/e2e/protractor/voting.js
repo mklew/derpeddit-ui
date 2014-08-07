@@ -18,7 +18,7 @@ describe('Voting scenarios', function () {
     }
 
     function getScoreText(post) {
-        return post.element(by.model('post.score')).getAttribute('value');
+        return post.element(by.binding('post.score')).getText();
     }
 
     function performVoting(post, voteSelector, comparator) {

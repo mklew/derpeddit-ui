@@ -12,8 +12,8 @@ describe('index page scenarios', function() {
     function postsSortedByScore() {
         var posts = element.all(by.repeater('post in postsIndex.posts'));
 
-        posts.get(0).element(by.model('post.score')).getAttribute('value').then(function(s1){
-            posts.get(1).element(by.model('post.score')).getAttribute('value').then(function(s2){
+        posts.get(0).element(by.binding('post.score')).getText().then(function(s1){
+            posts.get(1).element(by.binding('post.score')).getText().then(function(s2){
                 expect(parseInt(s1) >= parseInt(s2)).toBe(true);
             })
         })

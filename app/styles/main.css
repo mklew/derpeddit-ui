@@ -91,3 +91,6 @@ body {
     padding: 3px 5px 3px 5px;
     margin: 1px 0px 1px 0px;
 }
+span.score {
+    margin-right: 10px;
+}

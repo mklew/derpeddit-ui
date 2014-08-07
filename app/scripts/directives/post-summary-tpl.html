@@ -1,15 +1,10 @@
 <div class="dpt-post-summary">
     <div class="col-md-3">
-        <div class="input-group">
-            <input type="text" class="form-control score" ng-model="post.score">
-
-            <div class="input-group-btn">
-                <button type="button" class="btn btn-xs" tabindex="-1" ng-if="CurrentUser.isLoggedIn()">
-                    <span class="glyphicon glyphicon-chevron-up dpt-up-vote" ng-click="upVote()"></span>
-                    <span class="glyphicon glyphicon-chevron-down dpt-down-vote" ng-click="downVote()"></span>
-                </button>
-            </div>
-        </div>
+        <button type="button" class="btn btn-default btn-sm">
+            <span class="score">{{post.score}}</span>
+            <span class="glyphicon glyphicon-chevron-up dpt-up-vote" ng-click="upVote()" ng-if="CurrentUser.isLoggedIn()"></span>
+            <span class="glyphicon glyphicon-chevron-down dpt-down-vote" ng-click="downVote()" ng-if="CurrentUser.isLoggedIn()"></span>
+        </button>
     </div>
     <div class="col-md-9">
         <p ng-if="!isLinkPost(post)" class="dpt-post-title"><a ng-href="#/post/{{post.id}}">{{ post.title }}</a></p>
