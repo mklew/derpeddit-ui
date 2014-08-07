@@ -27,5 +27,5 @@ angular.module('dpt.posts')
             }, function(e){
                 $log.error('submit link error', e);
             })
-        }
+        };
     }]);

@@ -6,7 +6,7 @@
                 <button type="button" class="btn btn-default" ng-click="submitCtx.submitText = true"
                         ng-class="{'active' : submitCtx.submitText}">Submit new text
                 </button>
-                <button type="button" class="btn btn-default" ng-click="submitCtx.submitText = false"
+                <button type="button" class="btn btn-default dpt-to-new-link" ng-click="submitCtx.submitText = false"
                         ng-class="{'active' : !submitCtx.submitText}">Submit new link
                 </button>
             </div>
@@ -20,22 +20,22 @@
                 </div>
                 <div class="form-group">
                     <label for="postText">Text</label>
-                    <input type="text" class="form-control" id="postText" ng-model="post.text" name="postText">
+                    <textarea class="form-control" rows="3" id="postText" ng-model="post.text" name="postText"></textarea>
                 </div>
                 <button type="submit" class="btn btn-default dpt-submit-text-post" ng-click="submitText()">Submit text</button>
             </form>
         </div>
         <div class="panel-body" ng-if="!submitCtx.submitText">
-            <form name="submitLinkForm" ng-controller="SubmitLinkFormController">
-                <div class="form-group">
+            <form name="submitLinkForm" id="submitLinkForm" ng-controller="SubmitLinkFormController">
+                <div class="form-group" ng-class="{'has-error' : submitLinkForm.postTitle.$error.required && submitLinkForm.postTitle.$dirty, 'has-success': !submitLinkForm.postTitle.$error.required && submitLinkForm.postTitle.$dirty}">
                     <label for="linkPostTitle">Title</label>
                     <input type="text" class="form-control" id="linkPostTitle" placeholder="title" ng-model="post.title" name="postTitle" required="">
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-class="{'has-error' : submitLinkForm.postLink.$error.url && submitLinkForm.postLink.$dirty, 'has-success': !submitLinkForm.postLink.$error.url && submitLinkForm.postLink.$dirty}">
                     <label for="postLink">URL</label>
-                    <input type="text" class="form-control" id="postLink" ng-model="post.link" name="postLink">
+                    <input type="url" class="form-control" id="postLink" ng-model="post.link" name="postLink">
                 </div>
-                <button type="submit" class="btn btn-default" ng-click="submitLink()">Submit link</button>
+                <button type="submit" class="btn btn-default dpt-submit-link-post" ng-click="submitLink()">Submit link</button>
             </form>
         </div>
     </div>
