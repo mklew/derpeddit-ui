@@ -22,6 +22,7 @@ exports.config = {
   },
 
     suites: {
-        voting: 'e2e/protractor/voting.js'
+        voting: 'e2e/protractor/voting.js',
+        viewPost: 'e2e/protractor/view-post.js'
     }
 };

@@ -32,8 +32,36 @@ function createTextPost(postTitle, postText) {
     textForm.element(by.css('.dpt-submit-text-post')).click();
 }
 
+function createLinkPost(postTitle, postLink) {
+    givenLoggedInAndOnSubmitNewPost();
+    //And I had selected submit link tab
+    element(by.css('.dpt-to-new-link')).click();
+
+    //And I have entered post title and URL
+    var linkForm = element(by.id('submitLinkForm'));
+    linkForm.element(by.id('linkPostTitle')).sendKeys(postTitle);
+    linkForm.element(by.id('postLink')).sendKeys(postLink);
+
+    //When I click on submit new link post
+    linkForm.element(by.css('.dpt-submit-link-post')).click();
+}
+
+function createTextPostWithComments(postTitle, postText) {
+    createTextPost(postTitle, postText);
+    element(by.id('newestPosts')).click();
+    var createdPost = element.all(by.repeater('post in postsIndex.posts')).first();
+    createdPost.element(by.css('.dpt-comments-link')).click();
+    var comment = utils.randomComment();
+    element(by.id('commentText')).sendKeys(comment);
+
+    //When I click on comment button
+    element(by.css('.dpt-submit-comment')).click();
+}
+
 module.exports = {
     clickSubmitNewPost : clickSubmitNewPost,
     givenLoggedInAndOnSubmitNewPost : givenLoggedInAndOnSubmitNewPost,
-    createTextPost : createTextPost
+    createTextPost : createTextPost,
+    createLinkPost : createLinkPost,
+    createTextPostWithComments : createTextPostWithComments
 };
