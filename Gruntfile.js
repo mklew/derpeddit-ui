@@ -92,18 +92,28 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
-        proxies: [
-            {
-                context: '/api',
-                host: '127.0.0.1',
-                port: 8000,
-                https: false,
-                xforward: false,
-                headers: {
-                    "Access-Control-Allow-Origin": "*"
-                }
-            }
-        ],
+//        proxies: [
+//            {
+//                context: '/api',
+//                host: '127.0.0.1',
+//                port: 8000,
+//                https: false,
+//                xforward: false,
+//                headers: {
+//                    "Access-Control-Allow-Origin": "*"
+//                }
+//            }
+//            {
+//                context: '/api',
+//                host: ' derpeddit-herokuapp-com-udhuvcqm9ydz.runscope.net',
+//                port: '443',
+//                https: true,
+//                xforward: false,
+//                headers: {
+//                    "Access-Control-Allow-Origin": "*"
+//                }
+//            }
+//        ],
       livereload: {
         options: {
             base: [
@@ -112,40 +122,29 @@ module.exports = function (grunt) {
             ],
           open: true,
           middleware: function (connect, options) {
-              if (!Array.isArray(options.base)) {
-                  options.base = [options.base];
-              }
+//              if (!Array.isArray(options.base)) {
+//                  options.base = [options.base];
+//              }
+//
+//              // Setup the proxy
+//              var middlewares = [require('grunt-connect-proxy/lib/utils').proxyRequest];
+//
+//              middlewares.push(connect.static('.tmp'));
+//              middlewares.push(connect().use(
+//                  '/bower_components',
+//                  connect.static('./bower_components')
+//              ));
+//              middlewares.push(connect.static(appConfig.app));
+//              return middlewares;
 
-              // Setup the proxy
-              var middlewares = [require('grunt-connect-proxy/lib/utils').proxyRequest];
-
-              // Serve static files.
-//              options.base.forEach(function(base) {
-//                  middlewares.push(connect.static(base));
-//              });
-
-              middlewares.push(connect.static('.tmp'));
-              middlewares.push(connect().use(
-                  '/bower_components',
-                  connect.static('./bower_components')
-              ));
-              middlewares.push(connect.static(appConfig.app));
-
-
-              // Make directory browse-able.
-//              var directory = options.directory || options.base[options.base.length - 1];
-//              middlewares.push(connect.directory(directory));
-
-              return middlewares;
-
-//              return [
-//              connect.static('.tmp'),
-//              connect().use(
-//                '/bower_components',
-//                connect.static('./bower_components')
-//              ),
-//              connect.static(appConfig.app)
-//            ];
+              return [
+              connect.static('.tmp'),
+              connect().use(
+                '/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect.static(appConfig.app)
+            ];
           }
         }
       },
@@ -451,7 +450,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer',
-      'configureProxies:server',
+//      'configureProxies:server',
       'connect:livereload',
       'watch'
     ]);
