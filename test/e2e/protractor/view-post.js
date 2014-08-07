@@ -14,21 +14,30 @@ describe('View a post scenarios', function () {
         return element.all(by.repeater('post in postsIndex.posts')).first();
     }
 
+    function textPostScenario(navigateToPostFn) {
+        var postTitle = "Some text post";
+        var postText = "some text content";
+        createPostParts.createTextPostWithComments(postTitle, postText);
+        utils.tryToLogout();
+        var createdPost = getNewestPost();
+
+        //When I navigate to post
+        navigateToPostFn(createdPost);
+
+        //Then I should see posts text and title
+        expect(element(by.css('.dpt-post-title')).getText()).toMatch(postTitle);
+        expect(element(by.css('.dpt-post-text')).getText()).toMatch(postText);
+        //And I should notice comments below
+        expect(element.all(by.repeater('comment in postWithComments.comments')).count()).toBeGreaterThan(0);
+    }
+
     describe('Scenario: Text post', function () {
         it('should notice comments below', function () {
-            var postTitle = "Some text post";
-            var postText = "some text content";
-            createPostParts.createTextPostWithComments(postTitle, postText);
-            utils.tryToLogout();
-            var createdPost = getNewestPost();
 
             //When I click on a text post link
-            createdPost.element(by.binding('post.title')).click();
-            //Then I should see posts text and title
-            expect(element(by.css('.dpt-post-title')).getText()).toMatch(postTitle);
-            expect(element(by.css('.dpt-post-text')).getText()).toMatch(postText);
-            //And I should notice comments below
-            expect(element.all(by.repeater('comment in postWithComments.comments')).count()).toBeGreaterThan(0);
+            textPostScenario(function (createdPost) {
+                createdPost.element(by.binding('post.title')).click();
+            });
         });
     });
 
@@ -49,9 +58,11 @@ describe('View a post scenarios', function () {
 
     describe('Scenario: Reading comments on a text post', function () {
         it('should see posts text and title and should notice comments below', function () {
-            //When I click on a comments link for some post
-            //Then I should see posts text and title
-            //And I should notice comments below
+
+            textPostScenario(function (createdPost) {
+                //     When I click on a comments link for some post
+                createdPost.element(by.css('.dpt-comments-link')).click();
+            })
         });
     });
 
