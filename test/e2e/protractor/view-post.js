@@ -9,17 +9,12 @@ describe('View a post scenarios', function () {
         utils.tryToLogout();
     });
 
-    function getNewestPost() {
-        element(by.id('newestPosts')).click();
-        return element.all(by.repeater('post in postsIndex.posts')).first();
-    }
-
     function textPostScenario(navigateToPostFn) {
         var postTitle = "Some text post";
         var postText = "some text content";
         createPostParts.createTextPostWithComments(postTitle, postText);
         utils.tryToLogout();
-        var createdPost = getNewestPost();
+        var createdPost = utils.getNewestPost();
 
         //When I navigate to post
         navigateToPostFn(createdPost);
@@ -28,6 +23,10 @@ describe('View a post scenarios', function () {
         expect(element(by.css('.dpt-post-title')).getText()).toMatch(postTitle);
         expect(element(by.css('.dpt-post-text')).getText()).toMatch(postText);
         //And I should notice comments below
+        hasComments();
+    }
+
+    function hasComments(){
         expect(element.all(by.repeater('comment in postWithComments.comments')).count()).toBeGreaterThan(0);
     }
 
@@ -48,7 +47,7 @@ describe('View a post scenarios', function () {
             createPostParts.createLinkPost(postTitle, postLink);
             utils.tryToLogout();
             element(by.id('newestPosts')).click();
-            var createdPost = getNewestPost();
+            var createdPost = utils.getNewestPost();
             //When I click on a link post link
             createdPost.element(by.css('.dpt-post-title')).element(by.tagName('a')).click();
             //Then I should be directed to post link URL
@@ -68,9 +67,15 @@ describe('View a post scenarios', function () {
 
     describe('Scenario: Reading comments on a link post', function () {
         it('should see posts title and notice comments below', function () {
+            var postTitle = "some awesome link";
+            createPostParts.createLinkPostWithComments(postTitle, "http://reddit.com/");
+            var createdPost = utils.getNewestPost();
             //When I click on a comments link for some post
+            createdPost.element(by.css('.dpt-comments-link')).click();
             //Then I should see posts title
+            expect(element(by.css('.dpt-post-title')).getText()).toMatch(postTitle);
             //And I should notice comments below
+            hasComments();
         });
     });
 });

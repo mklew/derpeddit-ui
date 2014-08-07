@@ -46,10 +46,7 @@ function createLinkPost(postTitle, postLink) {
     linkForm.element(by.css('.dpt-submit-link-post')).click();
 }
 
-function createTextPostWithComments(postTitle, postText) {
-    createTextPost(postTitle, postText);
-    element(by.id('newestPosts')).click();
-    var createdPost = element.all(by.repeater('post in postsIndex.posts')).first();
+function commentOnPost(createdPost) {
     createdPost.element(by.css('.dpt-comments-link')).click();
     var comment = utils.randomComment();
     element(by.id('commentText')).sendKeys(comment);
@@ -58,10 +55,24 @@ function createTextPostWithComments(postTitle, postText) {
     element(by.css('.dpt-submit-comment')).click();
 }
 
+
+function createTextPostWithComments(postTitle, postText) {
+    createTextPost(postTitle, postText);
+    var createdPost = utils.getNewestPost();
+    commentOnPost(createdPost);
+}
+
+function createLinkPostWithComments(postTitle, postLink) {
+    createLinkPost(postTitle, postLink);
+    var createdPost = utils.getNewestPost();
+    commentOnPost(createdPost);
+}
+
 module.exports = {
-    clickSubmitNewPost : clickSubmitNewPost,
-    givenLoggedInAndOnSubmitNewPost : givenLoggedInAndOnSubmitNewPost,
-    createTextPost : createTextPost,
-    createLinkPost : createLinkPost,
-    createTextPostWithComments : createTextPostWithComments
+    clickSubmitNewPost: clickSubmitNewPost,
+    givenLoggedInAndOnSubmitNewPost: givenLoggedInAndOnSubmitNewPost,
+    createTextPost: createTextPost,
+    createLinkPost: createLinkPost,
+    createTextPostWithComments: createTextPostWithComments,
+    createLinkPostWithComments: createLinkPostWithComments
 };
